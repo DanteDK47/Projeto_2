@@ -44,7 +44,7 @@ int main() {
     int opcao;
 
     do {
-        printf("\n==== Sistema de Vendas do Mercado ====\n");
+        printf("\n Sistema de Vendas do Mercado \n");
         printf("1. Cadastrar produto\n");
         printf("2. Listar produtos por seção\n");
         printf("3. Realizar venda\n");
