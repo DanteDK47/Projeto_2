@@ -79,6 +79,24 @@ void realizarVenda(Produtoprodutos, int totalProdutos) {
     }
     printf("Produto não encontrado.\n");
 }
+void gerarRelatorioPorSecao(Secao secao) {
+    printf("Relatório de vendas da seção %s:\n", secao == Acougue ? "Açougue" : secao == Padaria ? "Padaria" : "Mercado");
+
+    FILE *vendas = fopen("vendas.txt", "r");
+    if (vendas == NULL) {
+        printf("Nenhuma venda registrada até o momento.\n");
+        return;
+    }
+
+    char linha[256];
+    while (fgets(linha, sizeof(linha), vendas)) {
+        if (strstr(linha, secao == Acougue ? "Açougue" : secao == Padaria ? "Padaria" : "Mercado")) {
+            printf("%s", linha);
+        }
+    }
+
+    fclose(vendas);
+}
 int main() {
     Produto produtos[100];
     int totalProdutos = 0;
