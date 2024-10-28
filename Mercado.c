@@ -126,5 +126,24 @@ int main() {
                 break;
             }
             case 3:
+                
                 realizarVenda(produtos, totalProdutos);
                 break;
+            case 4: {
+                int secao;
+                printf("Escolha a seção (0 - Açougue, 1 - Padaria, 2 - Mercado): ");
+                scanf("%d", &secao);
+                getchar();
+                gerarRelatorioPorSecao((Secao)secao);
+                break;
+            }
+            case 5:
+                printf("Saindo...\n");
+                break;
+            default:
+                printf("Opção inválida. Tente novamente.\n");
+        }
+    } while (opcao != 5);
+
+    return 0;
+}
