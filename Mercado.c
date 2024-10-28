@@ -37,7 +37,48 @@ void cadastrarProduto(Produto *produtos, int *totalProdutos) {
     produtos[*totalProdutos].codigo = *totalProdutos + 1;
     (*totalProdutos)++;
 }
+void listarProdutosPorSecao(Produto produtos, int totalProdutos, Secao secao) {
+    printf("Produtos na seção %s:\n", secao == Acougue ? "Açougue" : secao == Padaria ? "Padaria" : "Mercado");
 
+    for (int i = 0; i < totalProdutos; i++) {
+        if (produtos[i].secao == secao) {
+            printf("Código: %d | Nome: %s | Preço: %.2f | Quantidade: %d\n", 
+                   produtos[i].codigo, produtos[i].nome, produtos[i].preco, produtos[i].quantidade);
+        }
+    }
+}
+
+void realizarVenda(Produtoprodutos, int totalProdutos) {
+    int codigoProduto, quantidade;
+    printf("Informe o código do produto: ");
+    scanf("%d", &codigoProduto);
+    getchar();
+
+    printf("Quantidade desejada: ");
+    scanf("%d", &quantidade);
+    getchar();
+
+    for (int i = 0; i < totalProdutos; i++) {
+        if (produtos[i].codigo == codigoProduto) {
+            if (produtos[i].quantidade >= quantidade) {
+                produtos[i].quantidade -= quantidade;
+                printf("Venda realizada: %d unidade(s) de %s.\n", quantidade, produtos[i].nome);
+
+                FILE vendas = fopen("vendas.txt", "a");
+                fprintf(vendas, "Produto: %s | Quantidade: %d | Total: R$%.2f | Seção: %s\n", 
+                        produtos[i].nome, quantidade, produtos[i].preco quantidade, 
+                        produtos[i].secao == Acougue ? "Açougue" : produtos[i].secao == Padaria ? "Padaria" : "Mercado");
+                fclose(vendas);
+
+                return;
+            } else {
+                printf("Quantidade insuficiente em estoque.\n");
+                return;
+            }
+        }
+    }
+    printf("Produto não encontrado.\n");
+}
 int main() {
     Produto produtos[100];
     int totalProdutos = 0;
@@ -57,4 +98,15 @@ int main() {
         switch (opcao) {
             case 1:
                 cadastrarProduto(produtos, &totalProdutos);
+                break;
+            case 2: {
+                int secao;
+                printf("Escolha a seção (0 - Açougue, 1 - Padaria, 2 - Mercado): ");
+                scanf("%d", &secao);
+                getchar();
+                listarProdutosPorSecao(produtos, totalProdutos, (Secao)secao);
+                break;
+            }
+            case 3:
+                realizarVenda(produtos, totalProdutos);
                 break;
